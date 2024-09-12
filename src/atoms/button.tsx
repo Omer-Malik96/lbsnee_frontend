@@ -3,9 +3,10 @@ import {Text, TouchableOpacity, TouchableOpacityProps} from 'react-native';
 
 // Define variant styles as utility classes
 const variantStyles = {
-  default: 'bg-gray-300 text-black p-4 rounded',
-  primary: 'bg-blue-500 text-white p-4 rounded',
-  secondary: 'bg-green-500 text-white p-4 rounded',
+  default: {button: 'bg-gray-300 p-2 rounded', text: 'text-black'},
+  primary: {button: 'bg-blue-500  p-2 rounded', text: 'text-white'},
+  secondary: {button: 'bg-green-500 p-2 rounded', text: 'text-white'},
+  delete: {button: 'bg-red-500  p-2 rounded', text: 'text-white'},
 };
 
 // Define the type for the variant prop
@@ -23,13 +24,14 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
   ...props
 }) => {
   // Determine button styles based on the variant prop
-  const buttonStyle = variantStyles[variant];
+  const buttonStyle = variantStyles[variant]?.button;
+  const textStyle = variantStyles[variant]?.text;
 
   return (
     <TouchableOpacity
       tw={`${buttonStyle} ${style}`} // Combine NativeWind styles with any additional styles
       {...props}>
-      <Text tw={`text-center font-bold`}>{title}</Text>
+      <Text tw={`${textStyle} text-center font-bold`}>{title}</Text>
     </TouchableOpacity>
   );
 };
