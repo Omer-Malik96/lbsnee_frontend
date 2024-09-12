@@ -9,7 +9,7 @@ import {Product} from '../types';
 
 export const ProductsScreen: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const {data: products, error, isLoading} = useGetProductsListQuery();
+  const {data: products} = useGetProductsListQuery();
   const localProducts = useSelector((state: RootState) => state.cart.products);
 
   // Memoized function to handle deleting a product

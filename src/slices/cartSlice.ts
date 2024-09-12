@@ -29,12 +29,13 @@ const cartSlice = createSlice({
       const productIndex = state.products.findIndex(
         product => product.id == action.payload,
       );
-      if (productIndex >= 0 && state.products[productIndex].quantity > 1)
-        state.products[productIndex].quantity -= 1;
+
       if (productIndex >= 0 && state.products[productIndex].quantity == 1)
         state.products = state.products.filter(
           product => product.id !== action.payload,
         );
+      else if (productIndex >= 0 && state.products[productIndex].quantity > 1)
+        state.products[productIndex].quantity -= 1;
     },
     isProductInCart(state, action: PayloadAction<string>) {
       const productIndex = state.products.findIndex(

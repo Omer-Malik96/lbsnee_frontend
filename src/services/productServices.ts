@@ -1,16 +1,22 @@
 // Need to use the React-specific entry point to import createApi
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import Config from 'react-native-config';
 import {Product} from '../types';
 
-const apiUrl = Config.API_URL;
 // Define a service using a base URL and expected endpoints
 export const productsApi = createApi({
   reducerPath: 'productsApi',
-  baseQuery: fetchBaseQuery({baseUrl: apiUrl}),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://shopping-app-670b3-default-rtdb.firebaseio.com',
+  }),
+  tagTypes: ['Get'],
   endpoints: builder => ({
     getProductsList: builder.query<Product[], void>({
-      query: () => `/products`, // Endpoint for fetching the list of Pokémon
+      query: () => {
+        return {
+          url: `/products.json`,
+          method: 'GET',
+        };
+      }, // Endpoint for fetching the list of Pokémon
     }),
   }),
 });
