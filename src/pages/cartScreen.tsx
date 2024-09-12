@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {addProductToCart, deleteProductFromCart} from '../slices/cartSlice';
 import {RootState} from '../store';
@@ -19,7 +19,7 @@ export const CartScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex flex-1 px-3">
       <Cart
         products={products ?? []}
         onAddToCart={onAddToCart}
@@ -28,10 +28,3 @@ export const CartScreen: React.FC = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});
