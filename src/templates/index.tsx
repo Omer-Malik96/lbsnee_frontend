@@ -1,5 +1,4 @@
-import {View} from 'react-native';
+import {Cart} from './cart';
+import {Products} from './products';
 
-export const App = () => {
-  return <View></View>;
-};
+export {Cart, Products};

@@ -1,48 +1,30 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {View} from 'react-native';
 import {InputField} from '../atoms';
 import {ProductList} from '../organisms';
-import {ProductProps} from '../organisms/ProductList';
+import {Product} from '../types';
 
-const Products: React.FC = () => {
+interface ProductProps {
+  handleAddProduct: (product: Product) => void;
+  products: Product[];
+  localProducts: Product[];
+  isInCart: (id: string) => Product | undefined;
+  handleDeleteProduct: (id: string) => void;
+}
+export const Products: React.FC<ProductProps> = ({
+  products,
+  isInCart,
+  handleAddProduct,
+  handleDeleteProduct,
+}) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [products, setProducts] = useState<ProductProps[]>([
-    // Sample product data
-    {
-      id: '1',
-      imageUrl: 'https://via.placeholder.com/150',
-      title: 'Product 1',
-      description: 'Description 1',
-      price: '$19.99',
-    },
-    {
-      id: '2',
-      imageUrl: 'https://via.placeholder.com/150',
-      title: 'Product 2',
-      description: 'Description 2',
-      price: '$29.99',
-    },
-    {
-      id: '3',
-      imageUrl: 'https://via.placeholder.com/150',
-      title: 'Product 3',
-      description: 'Description 3',
-      price: '$39.99',
-    },
-  ]);
 
-  const onAddToCart = (id: string) => {
-    console.log(`Add to Cart clicked for product with id ${id}`);
-  };
-
-  const onViewDetails = (id: string) => {
-    console.log(`View Details clicked for product with id ${id}`);
-  };
-
-  // Filter products based on searchTerm
-  const filteredProducts = products.filter(product =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  // Memoize the filtered products
+  const filteredProducts = useMemo(() => {
+    return products?.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [searchTerm, products]);
 
   return (
     <>
@@ -54,12 +36,11 @@ const Products: React.FC = () => {
         />
       </View>
       <ProductList
-        products={filteredProducts}
-        onAddToCart={onAddToCart}
-        onViewDetails={onViewDetails}
+        isInCart={isInCart}
+        products={filteredProducts ?? []}
+        onAddToCart={handleAddProduct}
+        onDeleteProduct={handleDeleteProduct}
       />
     </>
   );
 };
-
-export default Products;
