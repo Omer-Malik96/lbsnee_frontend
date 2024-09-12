@@ -1,3 +1,4 @@
+import {CartList} from './cartList';
 import {ProductList} from './productList';
 
-export {ProductList};
+export {CartList, ProductList};

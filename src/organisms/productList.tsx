@@ -1,32 +1,28 @@
 import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {ProductCard} from '../molecules';
+import {Product} from '../types';
 
-// Define the type for Product props
-export interface ProductProps {
-  id: string;
-  imageUrl: string;
-  title: string;
-  description: string;
-  price: string;
-}
 // Define the type for ProductList props
 interface ProductListProps {
-  products: ProductProps[];
-  onAddToCart: (id: string) => void;
-  onViewDetails: (id: string) => void;
+  products: Product[];
+  onAddToCart: (id: Product) => void;
+  onDeleteProduct: (id: string) => void;
+  isInCart: (id: string) => Product | undefined;
 }
 
 export const ProductList: React.FC<ProductListProps> = ({
   products,
   onAddToCart,
-  onViewDetails,
+  onDeleteProduct,
+  isInCart,
 }) => {
-  const renderItem = ({item}: {item: ProductProps}) => (
+  const renderItem = ({item}: {item: Product}) => (
     <ProductCard
       {...item}
-      onAddToCart={() => onAddToCart(item.id)}
-      onViewDetails={() => onViewDetails(item.id)}
+      isInCart={() => isInCart(item.id)}
+      onAddToCart={() => onAddToCart(item)}
+      onDeleteProduct={() => onDeleteProduct(item.id)}
     />
   );
 
