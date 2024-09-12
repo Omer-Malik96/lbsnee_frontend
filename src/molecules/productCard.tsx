@@ -2,35 +2,34 @@ import React from 'react';
 import {View} from 'react-native';
 import {ProductActions, ProductInfo} from '.';
 import {Image} from '../atoms';
+import {Product} from '../types';
 
 // Define the type for ProductCard props
-export interface ProductCardProps {
-  id: string;
-  imageUrl: string;
-  title: string;
-  description: string;
-  price: string;
+export type ProductCardProps = {
   onAddToCart: () => void;
-  onViewDetails: () => void;
-}
+  onDeleteProduct: () => void;
+  isInCart: () => Product | undefined;
+} & Product;
 
 const ProductCard: React.FC<ProductCardProps> = ({
-  imageUrl,
-  title,
-  description,
+  image,
+  name,
+  details,
   price,
   onAddToCart,
-  onViewDetails,
+  onDeleteProduct,
+  isInCart,
 }) => {
+  const inCartProduct = isInCart();
   return (
     <View className="border border-[#ddd] rounded-lg p-4 mb-4 bg-white shadow-md">
-      <Image
-        source={{uri: imageUrl}}
-        height={200}
-        className="rounded-lg w-full"
+      <Image source={{uri: image}} height={200} className="rounded-lg w-full" />
+      <ProductInfo title={name} description={details} price={price} />
+      <ProductActions
+        productInCart={inCartProduct}
+        onAddToCart={onAddToCart}
+        onDeleteProduct={onDeleteProduct}
       />
-      <ProductInfo title={title} description={description} price={price} />
-      <ProductActions onAddToCart={onAddToCart} onViewDetails={onViewDetails} />
     </View>
   );
 };

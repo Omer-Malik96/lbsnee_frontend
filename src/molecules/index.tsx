@@ -2,4 +2,10 @@ import ProductActions from './productAction';
 import ProductCard from './productCard';
 import ProductInfo from './productInfo';
 
-export {ProductActions, ProductCard, ProductInfo};
+import ProductQuantityControl from './quantityButton';
+export {
+  ProductActions,
+  ProductCard,
+  ProductInfo,
+  ProductQuantityControl,
+};

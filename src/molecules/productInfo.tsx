@@ -17,7 +17,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
   return (
     <View className="my-2">
       <Text variant="heading">{title}</Text>
-      <Text>{description}</Text>
+      <Text className="text-ellipsis" numberOfLines={3}>
+        {description}
+      </Text>
       <Text variant="heading">{price}</Text>
     </View>
   );
