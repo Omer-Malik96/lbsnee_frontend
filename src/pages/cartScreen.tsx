@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {addProductToCart, deleteProductFromCart} from '../slices/cartSlice';
@@ -10,13 +10,19 @@ export const CartScreen: React.FC = () => {
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.cart.products);
 
-  const handleRemoveProduct = (id: string) => {
-    dispatch(deleteProductFromCart(id));
-  };
+  const handleRemoveProduct = useCallback(
+    (id: string) => {
+      dispatch(deleteProductFromCart(id));
+    },
+    [dispatch],
+  );
 
-  const onAddToCart = (product: Product) => {
-    dispatch(addProductToCart(product));
-  };
+  const onAddToCart = useCallback(
+    (product: Product) => {
+      dispatch(addProductToCart(product));
+    },
+    [dispatch],
+  );
 
   return (
     <SafeAreaView className="flex flex-1 px-3">
